@@ -1,0 +1,174 @@
+!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Caminando con Jesús</title>
+<style>
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    text-align: center;
+}
+.container {
+    background: white;
+    padding: 20px;
+    margin: 40px auto;
+    width: 60%;
+    border-radius: 10px;
+}
+button {
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>✨ Caminando con Jesús ✨</h1>
+    <p id="nivel"></p>
+    <p id="pregunta"></p>
+    <div id="opciones"></div>
+    <p id="resultado"></p>
+</div>
+
+<script>
+
+let nivelActual = 0;
+let preguntaActual = 0;
+
+const niveles = [
+{
+nombre: "Apóstoles",
+preguntas: [
+{
+texto: "Jesús llama a sus discípulos a seguirlo (Mateo 4:19). ¿Qué les pidió?",
+opciones: ["Ser ricos", "Seguirlo", "Irse a casa"],
+correcta: 1
+},
+{
+texto: "Jesús enseña a los apóstoles a servir (Juan 13:14). ¿Qué hizo?",
+opciones: ["Lavó sus pies", "Los regañó", "Se fue"],
+correcta: 0
+},
+{
+texto: "Jesús envía a los apóstoles a predicar (Mateo 28:19). ¿Qué misión les dio?",
+opciones: ["Construir templos", "Hacer discípulos", "Escribir libros"],
+correcta: 1
+}
+]
+},
+
+{
+nombre: "Mujeres",
+preguntas: [
+{
+texto: "Jesús habla con la mujer samaritana (Juan 4). ¿Qué rompe?",
+opciones: ["Una ley social", "Una mesa", "Una puerta"],
+correcta: 0
+},
+{
+texto: "Jesús defiende a la mujer adúltera (Juan 8:7). ¿Qué dice?",
+opciones: ["Castíguenla", "El que esté sin pecado…", "Ignórenla"],
+correcta: 1
+},
+{
+texto: "María escucha a Jesús (Lucas 10:39). ¿Qué hace?",
+opciones: ["Cocina", "Escucha", "Se va"],
+correcta: 1
+}
+]
+},
+
+{
+nombre: "Enfermos",
+preguntas: [
+{
+texto: "Jesús sana a un leproso (Mateo 8:3). ¿Qué muestra?",
+opciones: ["Compasión", "Enojo", "Indiferencia"],
+correcta: 0
+},
+{
+texto: "Jesús sana a un ciego (Juan 9). ¿Qué hace?",
+opciones: ["Lo ignora", "Le da vista", "Lo regaña"],
+correcta: 1
+},
+{
+texto: "Jesús sana a un paralítico (Marcos 2:5). ¿Qué perdona?",
+opciones: ["Deudas", "Pecados", "Nada"],
+correcta: 1
+}
+]
+},
+
+{
+nombre: "Extranjeros",
+preguntas: [
+{
+texto: "El buen samaritano (Lucas 10:33). ¿Qué demuestra?",
+opciones: ["Amor al prójimo", "Rechazo", "Indiferencia"],
+correcta: 0
+},
+{
+texto: "Jesús sana al siervo del centurión (Mateo 8:10). ¿Qué admira?",
+opciones: ["Su fe", "Su riqueza", "Su poder"],
+correcta: 0
+},
+{
+texto: "La mujer cananea (Mateo 15:28). ¿Qué reconoce Jesús?",
+opciones: ["Su fe", "Su error", "Su silencio"],
+correcta: 0
+}
+]
+}
+];
+
+function cargarPregunta() {
+    const nivel = niveles[nivelActual];
+    const pregunta = nivel.preguntas[preguntaActual];
+
+    document.getElementById("nivel").innerText = "Nivel: " + nivel.nombre;
+    document.getElementById("pregunta").innerText = pregunta.texto;
+
+    let opcionesHTML = "";
+    pregunta.opciones.forEach((op, i) => {
+        opcionesHTML += `<button onclick="verificar(${i})">${op}</button>`;
+    });
+
+    document.getElementById("opciones").innerHTML = opcionesHTML;
+}
+
+function verificar(opcion) {
+    const correcta = niveles[nivelActual].preguntas[preguntaActual].correcta;
+
+    if (opcion === correcta) {
+        document.getElementById("resultado").innerText = "✅ Correcto";
+    } else {
+        document.getElementById("resultado").innerText = "❌ Incorrecto";
+    }
+
+    preguntaActual++;
+
+    if (preguntaActual >= niveles[nivelActual].preguntas.length) {
+        nivelActual++;
+        preguntaActual = 0;
+    }
+
+    if (nivelActual >= niveles.length) {
+        document.body.innerHTML = "<h1>🎉 Felicidades, has terminado el juego 🎉</h1>";
+    } else {
+        setTimeout(() => {
+            document.getElementById("resultado").innerText = "";
+            cargarPregunta();
+        }, 1000);
+    }
+}
+
+cargarPregunta();
+
+</script>
+
+</body>
+</html>
